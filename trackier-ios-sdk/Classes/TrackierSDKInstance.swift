@@ -237,7 +237,6 @@ class TrackierSDKInstance {
         var deeplinRes: InstallResponse? = nil
         let wrkRequest = makeWorkRequest(kind: TrackierWorkRequest.KIND_Resolver)
         wrkRequest.deeplinkUrl = url
-        print("trackiersdk",url as Any)
                 do {
                     deeplinRes = try await APIManager.doWorkDeeplinkresolver(workRequest: wrkRequest)
                 } catch {
@@ -270,7 +269,6 @@ class TrackierSDKInstance {
         DispatchQueue.global().async {
             Task {
                 resData = try await self.deeplinkData(url: uri)
-                print("trackiersdk-- resdata", resData as Any)
                 if self.isInitialized {
                     do {
                         if let resData = resData {
