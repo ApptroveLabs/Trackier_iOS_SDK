@@ -24,7 +24,6 @@ class APIManager: NSObject {
             let jsonData = Utils.convertDictToJSON(data: body)
             Logger.debug(message: "Sending install request. Body is: \(jsonData)")
             baseUrl = getBaseUrl(for: Constants.INSTALL_URL)
-            Logger.debug(message: "install url\(baseUrl)")
             APIService.post(uri: baseUrl, body: body, headers: headers)
             break;
         case TrackierWorkRequest.KIND_EVENT:
@@ -32,7 +31,6 @@ class APIManager: NSObject {
             let jsonData = Utils.convertDictToJSON(data: body)
             Logger.debug(message: "Sending event request. Body is: \(jsonData)")
             baseUrl = getBaseUrl(for: Constants.EVENTS_URL)
-            Logger.debug(message: "Events url\(baseUrl)")
             APIService.post(uri: baseUrl, body: body, headers: headers)
             break;
         case TrackierWorkRequest.KIND_SESSION:
