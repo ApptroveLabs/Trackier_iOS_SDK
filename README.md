@@ -80,7 +80,7 @@ targets: [
 Once installed, import the SDK in your Swift files:
 
 ```swift
-import trackier_ios_sdk
+import TrackierSDK
 ```
 
 ## <a id="qs-implement-sdk"></a>Integrate and Initialize the Trackier SDK
@@ -440,7 +440,7 @@ To associate a domain with your app, you need to have the associated domain file
 
 ```swift
 import UIKit
-import trackier_ios_sdk
+import TrackierSDK
 import AppTrackingTransparency
 import AdServices
 

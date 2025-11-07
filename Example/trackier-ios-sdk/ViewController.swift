@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import trackier_ios_sdk
+import TrackierSDK
 
 class ViewController: UIViewController {
 

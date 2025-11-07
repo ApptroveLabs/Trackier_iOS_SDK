@@ -1,5 +1,5 @@
 import XCTest
-import trackier_ios_sdk
+import TrackierSDK
 
 class Tests: XCTestCase {
 
