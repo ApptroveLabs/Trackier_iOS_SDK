@@ -35,5 +35,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This app uses tracking to measure advertising effectiveness and provide better user experience.</string>
 </dict>
 </plist>

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class TrackierWorkRequest {
     static let KIND_INSTALL = "install"

@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, DeepLinkListener {
     var window: UIWindow?
     
     func onDeepLinking(result: DeepLink) -> Void {
-        print("==result: \(result.getUrlParams()))")
+        print("==result: \(result.getUrl())")
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

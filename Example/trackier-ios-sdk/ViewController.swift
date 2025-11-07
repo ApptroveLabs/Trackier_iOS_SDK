@@ -16,6 +16,16 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         userDetails();
     }
+    
+    @IBAction func simpleEventsButtonTapped(_ sender: UIButton) {
+        print("Simple Events button tapped!")
+        eventsTracking()
+    }
+    
+    @IBAction func revenueEventsButtonTapped(_ sender: UIButton) {
+        print("Revenue Events button tapped!")
+        eventsRevenueTracking()
+    }
 }
 
 func userDetails(){

@@ -1,8 +1,9 @@
 # trackier-ios-sdk
 
-[![Version](https://img.shields.io/cocoapods/v/trackier-ios-sdk.svg?style=flat)](https://cocoapods.org/pods/trackier-ios-sdk)
-[![License](https://img.shields.io/cocoapods/l/trackier-ios-sdk.svg?style=flat)](https://cocoapods.org/pods/trackier-ios-sdk)
-[![Platform](https://img.shields.io/cocoapods/p/trackier-ios-sdk.svg?style=flat)](https://cocoapods.org/pods/trackier-ios-sdk)
+[![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://swift.org/package-manager/)
+[![Platform](https://img.shields.io/badge/platform-iOS%2010.0%2B-blue.svg)](https://developer.apple.com/ios/)
+[![Swift Version](https://img.shields.io/badge/Swift-5.0%2B-orange.svg)](https://swift.org/)
+[![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/ApptroveLabs/Trackier_iOS_SDK/blob/master/LICENSE)
 
 ## Table of Content
 
@@ -28,16 +29,58 @@
 
 We have created a example app for the Ios sdk integration. 
 
-Please check the [Example](https://github.com/trackier/ios-sdk/tree/master/Example) directory for know to how the `Trackier IOS SDK` can be integrated.
+Please check the [Example](https://github.com/ApptroveLabs/Trackier_iOS_SDK/tree/master/Example) directory to see how the `Trackier iOS SDK` can be integrated.
 
-To run the example project, clone the repo, and run pod install from the Example directory first. If you're new to CocoaPods, see their [official documentation](https://guides.cocoapods.org/using/using-cocoapods) for info on how to create and use Pod Files.
+To run the example project, clone the repo and open the `trackier-ios-sdk.xcodeproj` file in Xcode. The dependencies will be automatically resolved by Swift Package Manager.
 
 ## <a id="qs-installation"></a>Installation
 
-trackier-ios-sdk is available through [CocoaPods](https://cocoapods.org/). To install it, simply add the following line to your Podfile:
+The Trackier iOS SDK uses **Swift Package Manager (SPM)** for dependency management.
 
-```ruby
-    pod 'trackier-ios-sdk'
+### Swift Package Manager
+
+To integrate Trackier iOS SDK using Swift Package Manager:
+
+#### Option 1: Xcode Integration (Recommended)
+
+1. In Xcode, open your project
+2. Go to `File` → `Add Package Dependencies...`
+3. Enter the repository URL:
+   ```
+   https://github.com/ApptroveLabs/Trackier_iOS_SDK.git
+   ```
+4. Select the version rule (e.g., "Up to Next Major Version" with 1.6.75)
+5. Click "Add Package"
+6. Select the `TrackierSDK` product and add it to your target
+7. Click "Add Package" again to confirm
+
+#### Option 2: Package.swift (For Swift Packages)
+
+Add the following dependency to your `Package.swift` file:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/ApptroveLabs/Trackier_iOS_SDK.git", from: "1.6.75")
+]
+```
+
+Then add `TrackierSDK` to your target dependencies:
+
+```swift
+targets: [
+    .target(
+        name: "YourTarget",
+        dependencies: ["TrackierSDK"]
+    )
+]
+```
+
+### Import the SDK
+
+Once installed, import the SDK in your Swift files:
+
+```swift
+import trackier_ios_sdk
 ```
 
 ## <a id="qs-implement-sdk"></a>Integrate and Initialize the Trackier SDK

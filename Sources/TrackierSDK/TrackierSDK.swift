@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import os
 import StoreKit
 import Alamofire
