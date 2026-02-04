@@ -2,7 +2,7 @@
 //  DynamicLink.swift
 //  
 //
-//  Created by Sanu Gupta on 29/05/25.
+//  Updated by Satyam Jha on 04/02/26.
 //
 
 public class AndroidParameters {

@@ -1,8 +1,8 @@
 //
 //  DeepLink.swift
-//  trackier-ios-sdk
+//  apptrove-ios-sdk
 //
-//  Created by Sanu Gupta on 17/02/23.
+//  Updated by Satyam Jha on 04/02/26.
 //
 
 import Foundation

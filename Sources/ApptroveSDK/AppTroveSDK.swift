@@ -1,33 +1,33 @@
 //
-//  TrackierSDK.swift
-//  trackier-ios-sdk
+//  AppTroveSDK.swift
+//  apptrove-ios-sdk
 //
-//  Created by Prakhar Srivastava on 18/03/21.
+//  Updated by Satyam Jha on 04/02/26.
 //
 
 import Foundation
-import UIKit
 import os
 import StoreKit
 import Alamofire
+import UIKit
 
-public class TrackierSDK {
+public class AppTroveSDK {
     private var isInitialized = false
-    private var instance = TrackierSDKInstance()
-    public static var config: TrackierSDKConfig!
+    private var instance = AppTroveSDKInstance()
+    public static var config: AppTroveSDKConfig!
     var appToken: String = ""
     
-    static let shared = TrackierSDK()
+    static let shared = AppTroveSDK()
     
     private init() {}
     
-    public static func initialize(config: TrackierSDKConfig) {
+    public static func initialize(config: AppTroveSDKConfig) {
         if (shared.isInitialized) {
             Logger.warning(message: "SDK Already initialized!")
             return
         }
         shared.isInitialized = true
-        Logger.info(message: "Trackier SDK \(Constants.SDK_VERSION) initialized")
+        Logger.info(message: "AppTrove SDK \(Constants.SDK_VERSION) initialized")
         shared.appToken = config.appToken
         self.config = config    
         shared.instance.initialize(config: config)
@@ -41,7 +41,7 @@ public class TrackierSDK {
         shared.instance.isEnabled = value
     }
    
-    public static func trackEvent(event: TrackierEvent) {
+    public static func trackEvent(event: AppTroveEvent) {
         if (!shared.isInitialized) {
             Logger.warning(message: "SDK Not Initialized")
             return
@@ -89,7 +89,7 @@ public class TrackierSDK {
         shared.instance.customerName = userName
     }
     
-    public static func getTrackierId() -> String {
+    public static func getAppTroveId() -> String {
         return CacheManager.getString(key: Constants.SHARED_PREF_INSTALL_ID)
     }
     
@@ -199,6 +199,18 @@ public class TrackierSDK {
     public static func setDOB(dob: String) {
         shared.instance.dob = dob
     }
+
+    public static func sendAPNToken(token: String) {
+        if (!shared.isInitialized) {
+            Logger.warning(message: "SDK Not Initialized")
+            return
+        }
+        if (!isEnabled()) {
+            Logger.warning(message: "SDK Disabled")
+            return
+        }
+        shared.instance.sendAPNToken(token: token)
+    }
     
     public static func parseDeepLink(uri: String?) {
         if #available(iOS 13.0, *) {
@@ -243,8 +255,8 @@ public class TrackierSDK {
             "osv": UIDevice.current.systemVersion,
             "sdkv": Constants.SDK_VERSION,
             "apv": appVersion,
-            "insId": TrackierSDK.getTrackierId().lowercased(),
-            "appKey": TrackierSDK.getAppToken()
+            "insId": AppTroveSDK.getAppTroveId().lowercased(),
+            "appKey": AppTroveSDK.getAppToken()
         ]
         AF.request(
             "https://sdkr.apptracking.io/dl/resolver",

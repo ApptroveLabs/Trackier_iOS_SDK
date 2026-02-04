@@ -4,15 +4,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "TrackierSDK",
+    name: "ApptroveSDK",
     platforms: [
         .iOS(.v10)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "TrackierSDK",
-            targets: ["TrackierSDK"]
+            name: "ApptroveSDK",
+            targets: ["ApptroveSDK"]
         ),
     ],
     dependencies: [
@@ -25,21 +25,21 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "TrackierSDK",
+            name: "ApptroveSDK",
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "CryptoSwift", package: "CryptoSwift"),
                 .product(name: "Willow", package: "Willow"),
             ],
-            path: "Sources",
+            path: "Sources/ApptroveSDK",
             resources: [
-                .process("TrackierSDK/PrivacyInfo.xcprivacy")
+                .process("PrivacyInfo.xcprivacy")
             ]
         ),
         .testTarget(
-            name: "TrackierSDKTests",
-            dependencies: ["TrackierSDK"],
-            path: "Tests"
+            name: "ApptroveSDKTests",
+            dependencies: ["ApptroveSDK"],
+            path: "Tests/ApptroveSDKTests"
         ),
     ],
     swiftLanguageVersions: [.v5]

@@ -1,9 +1,8 @@
 //
 //  DeviceInfo.swift
-//  trackier-ios-sdk
+//  apptrove-ios-sdk
 //
-//  Created by Prakhar Srivastava on 19/03/21.
-//  Modified by Hemant Mann
+//  Updated by Satyam Jha on 04/02/26.
 //
 
 import Foundation

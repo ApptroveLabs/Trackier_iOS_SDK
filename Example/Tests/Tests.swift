@@ -1,5 +1,12 @@
+//
+//  Tests.swift
+//  apptrove-ios-sdk_Tests
+//
+//  Updated by Satyam Jha on 04/02/26.
+//
+
 import XCTest
-import TrackierSDK
+import ApptroveSDK
 
 class Tests: XCTestCase {
 

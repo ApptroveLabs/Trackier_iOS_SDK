@@ -1,13 +1,13 @@
 //
 //  ViewController.swift
-//  trackier-ios-sdk
+//  apptrove-ios-sdk
 //
-//  Created by Trackier on 03/18/2021.
-//  Copyright (c) 2021 Trackier. All rights reserved.
+//  Updated by Satyam Jha on 04/02/26.
+//  Copyright (c) 2021 AppTrove. All rights reserved.
 //
 
 import UIKit
-import TrackierSDK
+import ApptroveSDK
 
 class ViewController: UIViewController {
 
@@ -30,24 +30,24 @@ class ViewController: UIViewController {
 
 func userDetails(){
     
-    let event = TrackierEvent(id: TrackierEvent.LOGIN)
+    let event = AppTroveEvent(id: AppTroveEvent.LOGIN)
     
     /*Passing the UserId and User EmailId Data */
-    TrackierSDK.setUserID(userId: "2998329") //Pass the UserId values here
-    TrackierSDK.setUserEmail(userEmail: "abc@gmail.com"); //Pass the user email id in the argument.
-    TrackierSDK.setUserName(userName: "abc")
-    TrackierSDK.setUserPhone(userPhone: "xxxxxxxxxx")
+    AppTroveSDK.setUserID(userId: "2998329") //Pass the UserId values here
+    AppTroveSDK.setUserEmail(userEmail: "abc@gmail.com"); //Pass the user email id in the argument.
+    AppTroveSDK.setUserName(userName: "abc")
+    AppTroveSDK.setUserPhone(userPhone: "xxxxxxxxxx")
     event.setDiscount(discount: 3.0)
     event.setCouponCode(couponCode: "test2")
     /*Passing the custom value in the events */
     event.addEventValue(prop: "customeValue1", val: "test1");
     event.addEventValue(prop: "customeValue2", val: "XXXXX");
-    TrackierSDK.trackEvent(event: event)
+    AppTroveSDK.trackEvent(event: event)
 }
 
 func eventsRevenueTracking(){
 
-    let event = TrackierEvent(id: TrackierEvent.LOGIN)
+    let event = AppTroveEvent(id: "xSrVe1F7rm")
 
     //Passing the revenue events be like below example
     event.setRevenue(revenue: 10.0, currency: "INR"); //Pass your generated revenue here.
@@ -57,11 +57,11 @@ func eventsRevenueTracking(){
     event.param2 = "param2";
     event.addEventValue(prop: "customeValue1", val: "test1");
     event.addEventValue(prop: "customeValue2", val: "XXXXX");
-    TrackierSDK.trackEvent(event: event)
+    AppTroveSDK.trackEvent(event: event)
 }
 
 func eventsTracking(){
-    let event = TrackierEvent(id:"sEMWSCTXeu")
+    let event = AppTroveEvent(id:"xSrVe1F7rm")
     
     /*Below are the function for the adding the extra data,
       You can add the extra data like login details of user or anything you need.
@@ -74,7 +74,7 @@ func eventsTracking(){
     event.param5 = "this is a param5 value"
     DispatchQueue.global().async {
         sleep(1)
-        TrackierSDK.trackEvent(event: event)
+        AppTroveSDK.trackEvent(event: event)
     }
 }
     

@@ -1,8 +1,8 @@
 //
 //  Logger.swift
-//  trackier-ios-sdk
+//  apptrove-ios-sdk
 //
-//  Created by Hemant Mann on 23/03/21.
+//  Updated by Satyam Jha on 04/02/26.
 //
 
 import Foundation

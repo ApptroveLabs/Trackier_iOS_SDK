@@ -1,4 +1,4 @@
-# trackier-ios-sdk
+# apptrove-ios-sdk
 
 [![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://swift.org/package-manager/)
 [![Platform](https://img.shields.io/badge/platform-iOS%2010.0%2B-blue.svg)](https://developer.apple.com/ios/)
@@ -10,11 +10,11 @@
 ### Requirements
 
 * [Installation Guide](#qs-installation)
-* [Integrate and Initialize the Trackier SDK](#qs-implement-sdk)
+* [Integrate and Initialize the Apptrove SDK](#qs-implement-sdk)
 * [Retrieve your SDK key](#qs-retrieve-dev-key)
     * [Initialize the SDK](#qs-initialize-sdk)
     * [Associate User Info during initialization of SDK](#qs-add-user-info)
-* [Events Tracking](#qs-trackier-event)
+* [Events Tracking](#qs-apptrove-event)
     * [Retrieve Event Id from dashboard](#qs-retrieve-event-id)
     * [Built-in Events](#qs-built-in)
     * [Customs Events](#qs-customs-events)
@@ -25,21 +25,21 @@
 * [Getting Campaign Data](#qs-campaign-data)
 * [Apple Search Ads](#qs-aaattribution)
 
-## <a id="qs-add-trackier-sdk"></a>Quick start guide
+## <a id="qs-add-apptrove-sdk"></a>Quick start guide
 
 We have created a example app for the Ios sdk integration. 
 
-Please check the [Example](https://github.com/ApptroveLabs/Trackier_iOS_SDK/tree/master/Example) directory to see how the `Trackier iOS SDK` can be integrated.
+Please check the [Example](https://github.com/ApptroveLabs/Trackier_iOS_SDK/tree/master/Example) directory to see how the `Apptrove iOS SDK` can be integrated.
 
-To run the example project, clone the repo and open the `trackier-ios-sdk.xcodeproj` file in Xcode. The dependencies will be automatically resolved by Swift Package Manager.
+To run the example project, clone the repo and open the `apptrove-ios-sdk.xcodeproj` file in Xcode. The dependencies will be automatically resolved by Swift Package Manager.
 
 ## <a id="qs-installation"></a>Installation
 
-The Trackier iOS SDK uses **Swift Package Manager (SPM)** for dependency management.
+The Apptrove iOS SDK uses **Swift Package Manager (SPM)** for dependency management.
 
 ### Swift Package Manager
 
-To integrate Trackier iOS SDK using Swift Package Manager:
+To integrate Apptrove iOS SDK using Swift Package Manager:
 
 #### Option 1: Xcode Integration (Recommended)
 
@@ -49,9 +49,9 @@ To integrate Trackier iOS SDK using Swift Package Manager:
    ```
    https://github.com/ApptroveLabs/Trackier_iOS_SDK.git
    ```
-4. Select the version rule (e.g., "Up to Next Major Version" with 1.6.75)
+4. Select the version rule (e.g., "Up to Next Major Version" with 2.0.1)
 5. Click "Add Package"
-6. Select the `TrackierSDK` product and add it to your target
+6. Select the `ApptroveSDK` product and add it to your target
 7. Click "Add Package" again to confirm
 
 #### Option 2: Package.swift (For Swift Packages)
@@ -60,17 +60,17 @@ Add the following dependency to your `Package.swift` file:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ApptroveLabs/Trackier_iOS_SDK.git", from: "1.6.75")
+    .package(url: "https://github.com/ApptroveLabs/Trackier_iOS_SDK.git", from: "2.0.1")
 ]
 ```
 
-Then add `TrackierSDK` to your target dependencies:
+Then add `ApptroveSDK` to your target dependencies:
 
 ```swift
 targets: [
     .target(
         name: "YourTarget",
-        dependencies: ["TrackierSDK"]
+        dependencies: ["ApptroveSDK"]
     )
 ]
 ```
@@ -80,18 +80,18 @@ targets: [
 Once installed, import the SDK in your Swift files:
 
 ```swift
-import TrackierSDK
+import ApptroveSDK
 ```
 
-## <a id="qs-implement-sdk"></a>Integrate and Initialize the Trackier SDK
+## <a id="qs-implement-sdk"></a>Integrate and Initialize the Apptrove SDK
 
 ### <a id="qs-retrieve-dev-key"></a>Retrieve your SDK key
 
-For initialising the Trackier SDk. First, We need to generate the SDK key from the Trackier MMP panel.
+For initialising the apptrove SDk. First, We need to generate the SDK key from the Apptrove MMP panel.
 
 Following below are the steps to retrieve the development key:-
 
-- Login your Trackier Panel
+- Login your Apptrove Panel
 - Select your application and click on Action button and login as
 - In the Dashboard, Click on the` SDK Integration` option on the left side of panel. 
 - under on the SDK Integration, You will be get the SDK Key.
@@ -124,12 +124,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-       /* While Initializing the SDK, You need to pass the two arguments in the TrackierSDKConfig.
-        * In First argument, you need to pass the Trackier SDK api key
+       /* While Initializing the SDK, You need to pass the two arguments in the AppTroveSDKConfig.
+        * In First argument, you need to pass the Apptrove SDK api key
         * In second argument, you need to pass the environment which can be either "development", "production" or "testing". */
         
-        let config = TrackierSDKConfig(appToken: "xxxx-xx-xxx-xxx", env: TrackierSDKConfig.ENV_DEVELOPMENT) //Pass your Trackier sdk api key
-        TrackierSDK.initialize(config: config)
+        let config = AppTroveSDKConfig(appToken: "xxxx-xx-xxx-xxx", env: AppTroveSDKConfig.ENV_DEVELOPMENT) //Pass your apptrove sdk api key
+        AppTroveSDK.initialize(config: config)
         return true
     }   
 }
@@ -143,12 +143,12 @@ Screenshot[2]
 <img width="1000" alt="Screenshot 2022-07-04 at 12 20 38 AM" src="https://user-images.githubusercontent.com/16884982/177053392-62aae4d6-2e7f-4eaf-a530-29d538a3cefc.png">
 
 
-## <a id="qs-trackier-event"></a>Events Tracking 
+## <a id="qs-apptrove-event"></a>Events Tracking 
 
-<a id="qs-retrieve-event-id"></a>Trackier events trackings enable to provides the insights into how to user interacts with your app. 
-Trackier SDK easily get that insights data from the app. Just follow with the simple events integration process
+<a id="qs-retrieve-event-id"></a>Apptrove events trackings enable to provides the insights into how to user interacts with your app. 
+Apptrove SDK easily get that insights data from the app. Just follow with the simple events integration process
 
-Trackier provides the `Built-in events` and `Customs events` on the Trackier panel.
+Apptrove provides the `Built-in events` and `Customs events` on the Apptrove panel.
 
 #### <a id="qs-built-in"></a> **Built-in Events** - 
 
@@ -168,17 +168,17 @@ Screenshot[3]
 /*
  * Event Tracking
   <------------->
- * The below code is the example to pass a event to the Trackier SDK.
+ * The below code is the example to pass a event to the Apptrove SDK.
  * This event requires only 1 Parameter which is the Event ID.
  * Below are the example of built-in events function calling
- * The arguments - "TrackierEvent.LOGIN" passed in the Trackier event class is Events id
+ * The arguments - "AppTroveEvent.LOGIN" passed in the Apptrove event class is Events id
  *
  */
 
 
 func eventsTracking(){
 
-    let event = TrackierEvent(id: TrackierEvent.LOGIN)
+    let event = AppTroveEvent(id: AppTroveEvent.LOGIN)
  
    /* Below are the function for the adding the extra data,
       You can add the extra data like login details of user or anything you need.
@@ -191,14 +191,14 @@ func eventsTracking(){
     event.param5 = "this is a param5 value"
     DispatchQueue.global().async {
         sleep(1)
-        TrackierSDK.trackEvent(event: event)
+        AppTroveSDK.trackEvent(event: event)
 }
     
 }
 
 ```
 
-Note:- Argument in Trackier event class is event Id.
+Note:- Argument in Apptrove event class is event Id.
 
 You can integrate inbuilt params with the event. In-built param list are mentioned below:-
 
@@ -215,7 +215,7 @@ Screenshot[4]
 
 Customs events are created by user as per their required business logic. 
 
-You can create the events in the Trackier dashboard and integrate those events in the app project.
+You can create the events in the Apptrove dashboard and integrate those events in the app project.
 
 Screenshot[5]
 
@@ -229,15 +229,15 @@ Screenshot[5]
   /*
  * Event Tracking
   <------------->
- * The below code is the example to pass a event to the Trackier SDK.
+ * The below code is the example to pass a event to the Apptrove SDK.
  * This event requires only 1 Parameter which is the Event ID.
  * Below are the example of customs events function calling for `AppOpen` event name.
- * The arguments - "sEMWSCTXeu" passed in the Trackier event class is Events id 
+ * The arguments - "sEMWSCTXeu" passed in the Apptrove event class is Events id 
  *
  */
 
   func eventsTracking(){
-    let event = TrackierEvent(id: "sEMWSCTXeu")
+    let event = AppTroveEvent(id: "sEMWSCTXeu")
     
    /* Below are the function for the adding the extra data,
       You can add the extra data like login details of user or anything you need.
@@ -250,7 +250,7 @@ Screenshot[5]
     event.param5 = "this is a param5 value"
     DispatchQueue.global().async {
         sleep(1)
-        TrackierSDK.trackEvent(event: event)
+        AppTroveSDK.trackEvent(event: event)
    }
     
 }
@@ -266,13 +266,13 @@ Screenshot[6]
 
 ### <a id="qs-track-event-with-currencey"></a>Revenue Event Tracking
 
-Trackier allow user to pass the revenue data which is generated from the app through Revenue events. It is mainly used to keeping record of generating revenue from the app and also you can pass currency as well.
+Apptrove allow user to pass the revenue data which is generated from the app through Revenue events. It is mainly used to keeping record of generating revenue from the app and also you can pass currency as well.
 
 ```swift
     
   func eventsRevenueTracking(){
     
-    let event = TrackierEvent(id: TrackierEvent.LOGIN)
+    let event = AppTroveEvent(id: AppTroveEvent.LOGIN)
     
     //Passing the revenue events be like below example
     event.revenue = 10.0; //Pass your generated revenue here.
@@ -284,7 +284,7 @@ Trackier allow user to pass the revenue data which is generated from the app thr
     event.setEventValue("ev2", 1);
     DispatchQueue.global().async {
         sleep(1)
-        TrackierSDK.trackEvent(event: event)
+        AppTroveSDK.trackEvent(event: event)
 }
     
 }
@@ -303,13 +303,13 @@ Screenshot[7]
 ```swift
    func userDetails(){
     
-    let event = TrackierEvent(id: TrackierEvent.LOGIN)
+    let event = AppTroveEvent(id: AppTroveEvent.LOGIN)
     
     /*Passing the UserId and User EmailId Data */
-     TrackierSDK.setUserId(XXXXXXXX) // Pass user Id here
-     TrackierSDK.setUserEmail("abc@gmail.com") // Pass email Id
-     TrackierSDK.setUserName(userName: "abc") // Pass User Name
-     TrackierSDK.setUserPhone(userPhone: "8138933891") // Pass User Phone Number
+     AppTroveSDK.setUserId(XXXXXXXX) // Pass user Id here
+     AppTroveSDK.setUserEmail("abc@gmail.com") // Pass email Id
+     AppTroveSDK.setUserName(userName: "abc") // Pass User Name
+     AppTroveSDK.setUserPhone(userPhone: "8138933891") // Pass User Phone Number
     
     /*Passing the custom value in the events */
      event.addEventValue("customeValue1","XXXXX");
@@ -318,32 +318,32 @@ Screenshot[7]
     
     DispatchQueue.global().async {
         sleep(1)
-        TrackierSDK.trackEvent(event: event)
+        AppTroveSDK.trackEvent(event: event)
 }
   }
 ```
 
 ### Passing User Data to SDK
 
-Trackier allows to pass additional data like Userid, Email to SDK so that same can be correlated to the Trackier Data and logs.
+Apptrove allows to pass additional data like Userid, Email to SDK so that same can be correlated to the Apptrove Data and logs.
 
-Just need to pass the data of User Id, Email Id and other additional data to Trackier SDK function which is mentioned below:-
+Just need to pass the data of User Id, Email Id and other additional data to Apptrove SDK function which is mentioned below:-
 
 
 ```swift
 
 func userDetails(){
     
-    let event = TrackierEvent(id: TrackierEvent.LOGIN)
+    let event = AppTroveEvent(id: AppTroveEvent.LOGIN)
     
     /* Passing the UserId and User EmailId Data */
-     TrackierSDK.setUserId(XXXXXXXX) // Pass user Id here
-     TrackierSDK.setUserEmail("abc@gmail.com") // Pass email Id
-     TrackierSDK.setUserName(userName: "abc") // Pass User Name
-     TrackierSDK.setUserPhone(userPhone: "8138933891") // Pass User Phone Number
+     AppTroveSDK.setUserId(XXXXXXXX) // Pass user Id here
+     AppTroveSDK.setUserEmail("abc@gmail.com") // Pass email Id
+     AppTroveSDK.setUserName(userName: "abc") // Pass User Name
+     AppTroveSDK.setUserPhone(userPhone: "8138933891") // Pass User Phone Number
     DispatchQueue.global().async {
         sleep(1)
-        TrackierSDK.trackEvent(event: event)
+        AppTroveSDK.trackEvent(event: event)
 }
   }
 
@@ -363,10 +363,10 @@ To assosiate Customer Id , Customer Email and Customer additional params during 
 
 ```swift
     // Override point for customization after application launch.
-    let config = TrackierSDKConfig(appToken: "xxxx-xx-xxx-xxx", env: TrackierSDKConfig.ENV_DEVELOPMENT)
-    TrackierSDK.setUserId(XXXXXXXX)
-    TrackierSDK.setUserEmail("abc@gmail.com")
-    TrackierSDK.initialize(config: config)
+    let config = AppTroveSDKConfig(appToken: "xxxx-xx-xxx-xxx", env: AppTroveSDKConfig.ENV_DEVELOPMENT)
+    AppTroveSDK.setUserId(XXXXXXXX)
+    AppTroveSDK.setUserEmail("abc@gmail.com")
+    AppTroveSDK.initialize(config: config)
 ```
 
 #### Note
@@ -376,12 +376,12 @@ To assosiate Customer Id , Customer Email and Customer additional params during 
 ```swift
     val userAdditionalDetails = Dictionary <String,AnyObject>()
     userAdditionalDetails.["userMobile",99XXXXXXXX]
-    TrackierSDK.setUserAdditionalDetails(userAdditionalDetails)	
+    AppTroveSDK.setUserAdditionalDetails(userAdditionalDetails)	
 ```
 
 ## <a id="qs-sdk-signing"></a>SDK Signing
 ```swift
-let config = TrackierSDKConfig(appToken: "xx-182a-4584-aca3-xx", env: TrackierSDKConfig.ENVIRONMENT_PRODUCTION)
+let config = AppTroveSDKConfig(appToken: "xx-182a-4584-aca3-xx", env: AppTroveSDKConfig.ENVIRONMENT_PRODUCTION)
 config.setAppSecret(secretId: "xxxx", secretKey: "xxx-xx")
 ```
 
@@ -397,15 +397,15 @@ Follow the steps for configuring Universal Links
 2. On the left-hand menu, select Certificates, IDs & Profiles.
 3. Under Identifiers, select App IDs.
 4. Click the relevant app.
-5. Copy the prefix ID and app bundle ID and insert in app settings page in Trackier MMP.
+5. Copy the prefix ID and app bundle ID and insert in app settings page in Apptrove MMP.
 
 Screenshot[9]
 
 <img width="1000" alt="Screenshot apple" src="https://user-images.githubusercontent.com/16884982/190552695-060b22bc-e269-4a53-b397-09b6162b2faf.png">
 
-**b. Adding the prefix ID and app bundle ID in the Trackier MMP.**
+**b. Adding the prefix ID and app bundle ID in the Apptrove MMP.**
 
-- Login your Trackier Panel
+- Login your Apptrove Panel
 - Select your application and click on Action button and login as
 - In the Dashboard, Click on the `UniLink` option on the left side of panel.
 - On the Unilink page, create template by click on Action button which is located on the right side header of the page.
@@ -420,27 +420,27 @@ Screenshot[10]
 
 **c. Configure mobile apps to register associated domains**
 
-Configuring mobile apps to register approved domains takes place inside Xcode. It requires the unilink subdomain that you can get from app setting page in Trackier MMP.
+Configuring mobile apps to register approved domains takes place inside Xcode. It requires the unilink subdomain that you can get from app setting page in Apptrove MMP.
 
 1. Follow this [iOS instructions](https://developer.apple.com/documentation/xcode/supporting-associated-domains)
-2. Get the unilink subdomain from app settings page in Trackier MMP.
+2. Get the unilink subdomain from app settings page in Apptrove MMP.
 3. In Xcode, click on your project. Click on the project target.
 4. Switch to Capabilities tab.
 5. Turn on Associated Domain.
-6. Add the unilink subdomain that you got from Trackier MMP.
+6. Add the unilink subdomain that you got from Apptrove MMP.
 7. The format is applinks:subdomain.unilink.me. Add **applinks:** before the domain as like `applinks:subdomain.unilink.me`
 
 Screenshot[11]
 
 <img width="1000" alt="Screenshotxcode" src="https://user-images.githubusercontent.com/16884982/190557503-a13cbf23-8485-491b-a9d7-dcd86e44c912.png">
 
-To associate a domain with your app, you need to have the associated domain file on your domain and the appropriate entitlement in your app. Once the unilink is created, Trackier hosts the apple-app-site-association file. When a user installs your app, the system attempts to download the associated domain file and verify the domains in your Associated Domains Entitlement.
+To associate a domain with your app, you need to have the associated domain file on your domain and the appropriate entitlement in your app. Once the unilink is created, Apptrove hosts the apple-app-site-association file. When a user installs your app, the system attempts to download the associated domain file and verify the domains in your Associated Domains Entitlement.
 
 **For getting the deeplinking url:-** 
 
 ```swift
 import UIKit
-import TrackierSDK
+import ApptroveSDK
 import AppTrackingTransparency
 import AdServices
 
@@ -456,13 +456,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, DeepLinkListener {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        /*While Initializing the Sdk, You need to pass the two arguments in the TrackierSDKConfig.
-         * In First argument, you need to pass the Trackier SDK api key
+        /*While Initializing the Sdk, You need to pass the two arguments in the AppTroveSDKConfig.
+         * In First argument, you need to pass the Apptrove SDK api key
          * In second argument, you need to pass the environment which can be either "development", "production" or "testing". */
         
-        let config = TrackierSDKConfig(appToken: "xxxx-xx-xxx-xxx", env: TrackierSDKConfig.ENV_DEVELOPMENT) //Pass your Trackier sdk api key
+        let config = AppTroveSDKConfig(appToken: "xxxx-xx-xxx-xxx", env: AppTroveSDKConfig.ENV_DEVELOPMENT) //Pass your Apptrove sdk api key
         config.setDeeplinkListerner(listener: self) // call for set deeplinking listner
-        TrackierSDK.initialize(config: config)
+        AppTroveSDK.initialize(config: config)
         return true
     }
 
@@ -475,24 +475,24 @@ For getting the campaign data, We have a function that return the campaign data.
 ```swift
 
 func userDetails(){
-    let event = TrackierEvent(id: "EwQP98t4Ns")
-    var ad = TrackierSDK.getAd()
-    var adID = TrackierSDK.getAdID()
-    var adSet = TrackierSDK.getAdSet()
-    var adSetID = TrackierSDK.getAdSetID()
-    var campaign = TrackierSDK.getCampaign()
-    var campaignID = TrackierSDK.getCampaignID()
-    var channel = TrackierSDK.getChannel()
-    var clickId = TrackierSDK.getClickId()
-    var p1 = TrackierSDK.getP1()
-    var p2 = TrackierSDK.getP2()
-    var p3 = TrackierSDK.getP3()
-    var p4 = TrackierSDK.getP4()
-    var p5 = TrackierSDK.getP5()
-    var dlv = TrackierSDK.getDlv()
-    var pid = TrackierSDK.getPid()
-    var retargetting = TrackierSDK.getIsRetargeting()
-    TrackierSDK.trackEvent(event: event)
+    let event = AppTroveEvent(id: "EwQP98t4Ns")
+    var ad = AppTroveSDK.getAd()
+    var adID = AppTroveSDK.getAdID()
+    var adSet = AppTroveSDK.getAdSet()
+    var adSetID = AppTroveSDK.getAdSetID()
+    var campaign = AppTroveSDK.getCampaign()
+    var campaignID = AppTroveSDK.getCampaignID()
+    var channel = AppTroveSDK.getChannel()
+    var clickId = AppTroveSDK.getClickId()
+    var p1 = AppTroveSDK.getP1()
+    var p2 = AppTroveSDK.getP2()
+    var p3 = AppTroveSDK.getP3()
+    var p4 = AppTroveSDK.getP4()
+    var p5 = AppTroveSDK.getP5()
+    var dlv = AppTroveSDK.getDlv()
+    var pid = AppTroveSDK.getPid()
+    var retargetting = AppTroveSDK.getIsRetargeting()
+    AppTroveSDK.trackEvent(event: event)
 }
 
 ```
@@ -507,21 +507,22 @@ Here is some configuration in the SDK. Please follow the below example code
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        /*While Initializing the Sdk, You need to pass the two arguments in the TrackierSDKConfig.
-         * In First argument, you need to pass the Trackier SDK api key
+        /*While Initializing the Sdk, You need to pass the two arguments in the AppTroveSDKConfig.
+         * In First argument, you need to pass the Apptrove SDK api key
         * In second argument, you need to pass the environment which can be either "development", "production" or "testing". */
         
-        let config = TrackierSDKConfig(appToken: "xxxx-xx-xxx-xxx", env: TrackierSDKConfig.ENV_DEVELOPMENT) //Pass your Trackier sdk api key
+        let config = AppTroveSDKConfig(appToken: "xxxx-xx-xxx-xxx", env: AppTroveSDKConfig.ENV_DEVELOPMENT) //Pass your apptrove sdk api key
         // Apple Search Ads Attribution code
         if #available(iOS 14.3, *) {
             let a = try? AAAttribution.attributionToken()
-            TrackierSDK.updateAppleAdsToken(token: a!)
+            AppTroveSDK.updateAppleAdsToken(token: a!)
         } else {
             // Fallback on earlier versions
         }
-        TrackierSDK.initialize(config: config)
+        AppTroveSDK.initialize(config: config)
         return true
     }
 ```
+
 
 

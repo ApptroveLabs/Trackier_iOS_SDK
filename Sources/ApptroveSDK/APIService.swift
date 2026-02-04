@@ -1,8 +1,8 @@
 //
 //  APIService.swift
-//  trackier-ios-sdk
+//  apptrove-ios-sdk
 //
-//  Created by Hemant Mann on 19/03/21.
+//  Updated by Satyam Jha on 04/02/26.
 //
 
 import Foundation
@@ -157,6 +157,13 @@ class APIService {
     private func request(uri : String, method: HTTPMethod, body : [String : Any], headers : HTTPHeaders?) {
         sessionManager.request(uri, method: method, parameters: body, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (responseObj) -> Void in
             Logger.debug(message: "Response is \(responseObj)")
+            if let data = responseObj.data, uri.contains("ingest-token") {
+                // Just extract and log the message field
+                if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                   let message = json["message"] as? String {
+                    Logger.info(message: "APN token API response: \(message)")
+                }
+            }
         }
     }
     
@@ -214,7 +221,7 @@ class APIService {
                 }
                 if let err = response.error {
                     continuation.resume(throwing: err)
-                    print("trackiersdk",err)
+                    print("apptrovesdk",err)
                     return
                 }
                 fatalError("unhandled request edge case")

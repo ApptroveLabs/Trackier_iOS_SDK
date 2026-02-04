@@ -1,15 +1,15 @@
 //
 //  Constants.swift
-//  trackier-ios-sdk
+//  apptrove-ios-sdk
 //
-//  Created by Hemant Mann on 19/03/21.
+//  Updated by Satyam Jha on 04/02/26.
 //
 
 import Foundation
 
 class Constants {
-    static let SDK_VERSION = "1.6.75"
-    static let USER_AGENT = "com.trackier.sdk:ios-sdk:" + SDK_VERSION
+    static let SDK_VERSION = "2.0.1"
+    static let USER_AGENT = "com.apptrove.sdk:ios-sdk:" + SDK_VERSION
     static let API_VERSION = "v1"
     static let BASE_URL = "events.trackier.io/" + API_VERSION
     static let BASE_URL_DL = "sdkr.apptracking.io/dl"
@@ -17,10 +17,11 @@ class Constants {
     static let EVENTS_URL = BASE_URL + "/event"
     static let SESSIONS_URL = BASE_URL + "/session"
     static let TOKEN_URL = BASE_URL + "/device-token"
+    static let TOKEN_INGEST_URL = BASE_URL + "/ingest-token"
     static let DEEPLINK_URL = BASE_URL_DL + "/resolver"
     static let BASE_URL_DYNAMIC_LINK = "sdkr.apptracking.io/api/v4/ug/dlg/"
-    static let LOG_TAG = "com.trackier.sdk"
-    static let SHARED_PREF_NAME = "com.trackier.sdk"
+    static let LOG_TAG = "com.apptrove.sdk"
+    static let SHARED_PREF_NAME = "com.apptrove.sdk"
     static let SCHEME = "https://"
     
     static let SHARED_PREF_IS_INSTALL_TRACKED = "is_install_tracked"
