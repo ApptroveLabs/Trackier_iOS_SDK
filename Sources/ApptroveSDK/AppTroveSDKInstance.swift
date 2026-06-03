@@ -8,6 +8,7 @@
 import Foundation
 import os
 import Alamofire
+import StoreKit
 
 class AppTroveSDKInstance {
     
@@ -48,6 +49,22 @@ class AppTroveSDKInstance {
         self.appToken = config.appToken
         self.installId = getInstallID()
         self.installTime = getInstallTime()
+        
+        if config.isSkanAttributionEnabled {
+            if #available(iOS 15.4, *) {
+                // Apple's recommended modern replacement for registerAppForAdNetworkAttribution (deprecated iOS 15.4)
+                SKAdNetwork.updatePostbackConversionValue(0, completionHandler: { error in
+                    if let error = error {
+                        Logger.error(message: "SKAdNetwork initial registration failed: \(error.localizedDescription)")
+                    } else {
+                        Logger.info(message: "SKAdNetwork initial registration succeeded with value 0")
+                    }
+                })
+            } else if #available(iOS 14.0, *) {
+                SKAdNetwork.registerAppForAdNetworkAttribution()
+            }
+        }
+        
         if (timeoutInterval > 0) {
             DispatchQueue.main.async(execute: {
                 Timer.scheduledTimer(withTimeInterval: TimeInterval(self.timeoutInterval), repeats: false)
@@ -120,21 +137,6 @@ class AppTroveSDKInstance {
         wrk.sdkt = self.config.getSDKType()
         return wrk
     }
-    
-    //    private func trackInstall() {
-    //        if (isInstallTracked()) {
-    //            return
-    //        }
-    //        let wrk = makeWorkRequest(kind: AppTroveWorkRequest.KIND_INSTALL)
-    //        wrk.customerId = customerId
-    //        wrk.customerEmail = customerEmail
-    //        wrk.customerOptionals = customerOptionals
-    //        wrk.organic = organic
-    //        wrk.customerName = customerName
-    //        wrk.customerPhone = customerPhone
-    //        APIManager.doWork(workRequest: wrk)
-    //        setInstallTracked()
-    //    }
     
     private func trackInstall() {
         if (isInstallTracked()) {
@@ -236,27 +238,19 @@ class AppTroveSDKInstance {
     func deeplinkData(url: String) async throws -> InstallResponse? {
         var deeplinRes: InstallResponse? = nil
         let wrkRequest = makeWorkRequest(kind: AppTroveWorkRequest.KIND_Resolver)
-//        wrkRequest.deeplinkUrl = url
-//                do {
-//                    deeplinRes = try await APIManager.doWorkDeeplinkresolver(workRequest: wrkRequest)
-//                } catch {
-//                    //try await APIManager.doWorkDeeplinkresolver(workRequest: wrkRequest)
-//                }
         wrkRequest.deeplinkUrl = url ?? ""  // Handle nil URL
-               do {
-                   deeplinRes = try await APIManager.doWorkDeeplinkresolver(workRequest: wrkRequest)
-               } catch {
-                   Logger.error(message: "Failed to resolve deep link: \(error.localizedDescription)")
-               }
+        do {
+            deeplinRes = try await APIManager.doWorkDeeplinkresolver(workRequest: wrkRequest)
+        } catch {
+            Logger.error(message: "Failed to resolve deep link: \(error.localizedDescription)")
+        }
         return deeplinRes
     }
     
     func callDeepLinkListenerDynamic(dlObj: InstallResponse) {
         guard let dlt = config.getDeeplinkListerner() else { return }
-        if let url = dlObj.data?.url{
+        if let url = dlObj.data?.url {
             let resultDict: String = url 
-           // let dlResult = DeepLink(result: resultDict)
-            // Pass SDK parameters from API response to DeepLink
             let sdkParamsFromResponse = dlObj.data?.sdkParams
             let dlResult = DeepLink(result: resultDict, sdkParamsFromResponse: sdkParamsFromResponse)
             dlt.onDeepLinking(result: dlResult)
@@ -274,26 +268,27 @@ class AppTroveSDKInstance {
     @available(iOS 13.0, *)
     func parseDeepLink(uri: String?) {
         guard let uri = uri else { return }
-        var resData: InstallResponse?
+        // Full link resolver check 
+        let urlParams = DeepLink.getQueryParams(uri: uri)
+        if uri.contains("?") && !urlParams.isEmpty {
+            DispatchQueue.global().async {
+                if self.isInitialized, let dlt = self.config.getDeeplinkListerner() {
+                    let dl = DeepLink(result: uri)
+                    dlt.onDeepLinking(result: dl)
+                }
+            }
+            return
+        }
         DispatchQueue.global().async {
             Task {
-                resData = try await self.deeplinkData(url: uri)
-                if self.isInitialized {
-//                    do {
-//                        if let resData = resData {
-//                            self.callDeepLinkListenerDynamic(dlObj: resData)
-//                        }
-//                    }
-                    do {
-                        resData = try await self.deeplinkData(url: uri)
+                do {
+                    if let resData = try await self.deeplinkData(url: uri) {
                         if self.isInitialized {
-                            if let resData = resData {
-                                self.callDeepLinkListenerDynamic(dlObj: resData)
-                            }
+                            self.callDeepLinkListenerDynamic(dlObj: resData)
                         }
-                    } catch {
-                        Logger.error(message: "Failed to parse deep link: \(error.localizedDescription)")
                     }
+                } catch {
+                    Logger.error(message: "Failed to parse deep link: \(error.localizedDescription)")
                 }
             }
         }
@@ -307,10 +302,10 @@ class AppTroveSDKInstance {
         let config = dynamicLink.toDynamicLinkConfig(installId: installid, appKey: appToken)
         print("Dynamic Deeeplink body" , config.toDictionary())
         if !region.isEmpty {
-                baseUrl = "\(Constants.SCHEME)\(region)-\(Constants.BASE_URL_DYNAMIC_LINK)"
-            } else {
-                baseUrl = "\(Constants.SCHEME)\(Constants.BASE_URL_DYNAMIC_LINK)"
-           }
+            baseUrl = "\(Constants.SCHEME)\(region)-\(Constants.BASE_URL_DYNAMIC_LINK)"
+        } else {
+            baseUrl = "\(Constants.SCHEME)\(Constants.BASE_URL_DYNAMIC_LINK)"
+        }
         do {
             print("Dynamic Deeeplink body baseurl" , baseUrl)
             let response = try await APIService.postAsyncDynamicLink(
@@ -342,7 +337,6 @@ class AppTroveSDKInstance {
                 } catch {
                     //try await APIManager.doWorkDeeplinkresolver(workRequest: wrkRequest)
                 }
-                
             }
         }
     }
@@ -370,6 +364,56 @@ class AppTroveSDKInstance {
         // Send token with delay to ensure install data is processed first
         DispatchQueue.global().async {
             APIManager.doWorkTokenIngest(body: body)
+        }
+    }
+    
+    func updatePostbackConversion(
+        _ conversionValue: Int,
+        coarseValue: AppTroveCoarseValue?,
+        lockWindow: Bool?,
+        completion: ((Error?) -> Void)?
+    ) {
+        if (!config.isSkanAttributionEnabled) {
+            let err = NSError(domain: "AppTrove", code: -1, userInfo: [NSLocalizedDescriptionKey: "SKAdNetwork attribution is disabled in config."])
+            completion?(err)
+            return
+        }
+        
+        guard (0...63).contains(conversionValue) else {
+            let err = NSError(domain: "AppTrove", code: -1, userInfo: [NSLocalizedDescriptionKey: "SKAdNetwork conversion value must be between 0 and 63."])
+            completion?(err)
+            return
+        }
+        
+        let isLocked = lockWindow ?? false
+        
+        if #available(iOS 16.1, *) {
+            if let cv = coarseValue {
+                let skanCoarseValue: SKAdNetwork.CoarseConversionValue
+                switch cv {
+                case .high: skanCoarseValue = .high
+                case .medium: skanCoarseValue = .medium
+                case .low: skanCoarseValue = .low
+                }
+                
+                SKAdNetwork.updatePostbackConversionValue(conversionValue, coarseValue: skanCoarseValue, lockWindow: isLocked) { error in
+                    completion?(error)
+                }
+            } else {
+                SKAdNetwork.updatePostbackConversionValue(conversionValue) { error in
+                    completion?(error)
+                }
+            }
+        } else if #available(iOS 15.4, *) {
+            SKAdNetwork.updatePostbackConversionValue(conversionValue) { error in
+                completion?(error)
+            }
+        } else if #available(iOS 14.5, *) {
+            SKAdNetwork.updateConversionValue(conversionValue)
+            completion?(nil)
+        } else {
+            let err = NSError(domain: "AppTrove", code: -1, userInfo: [NSLocalizedDescriptionKey: "SKAdNetwork update not supported on this iOS version."])
+            completion?(err)
         }
     }
 }
