@@ -49,7 +49,7 @@ To integrate Apptrove iOS SDK using Swift Package Manager:
    ```
    https://github.com/ApptroveLabs/Trackier_iOS_SDK.git
    ```
-4. Select the version rule (e.g., "Up to Next Major Version" with 2.0.1)
+4. Select the version rule (e.g., "Up to Next Major Version" with 2.0.8)
 5. Click "Add Package"
 6. Select the `ApptroveSDK` product and add it to your target
 7. Click "Add Package" again to confirm
@@ -60,7 +60,7 @@ Add the following dependency to your `Package.swift` file:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ApptroveLabs/Trackier_iOS_SDK.git", from: "2.0.1")
+    .package(url: "https://github.com/ApptroveLabs/Trackier_iOS_SDK.git", from: "2.0.8")
 ]
 ```
 
