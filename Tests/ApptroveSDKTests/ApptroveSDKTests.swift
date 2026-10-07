@@ -12,7 +12,7 @@ final class ApptroveSDKTests: XCTestCase {
     func testSDKVersion() {
         // Test that SDK version constant is accessible
         XCTAssertFalse(Constants.SDK_VERSION.isEmpty)
-        XCTAssertEqual(Constants.SDK_VERSION, "2.0.1")
+        XCTAssertEqual(Constants.SDK_VERSION, "2.0.8")
     }
     
     func testAppTroveEventCreation() {
